@@ -1,3 +1,5 @@
+
+<!--
 Copyright (c) 2014, Daiki Umeda (XJINE) - lightweightmarkuplanguage.com
 All rights reserved.
 
@@ -25,3 +27,35 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<html>
+    <head>
+        <script type="text/javascript" src="./KARAS.js"></script>
+        <script type="text/javascript" src="./plugins/Debug.js"></script>
+        <script type="text/javascript" src="./plugins/Mark.js"></script>
+        <script type="text/javascript" src="./plugins/NowEditing.js"></script>
+        <script type="text/javascript" src="./plugins/Template.js"></script>
+        <script type="text/javascript" src="./plugins/TOC.js"></script>
+        <script type="text/javascript">
+        <!--
+        function convertKARAS()
+        {
+            var text = document.getElementById("inputarea").value;
+
+            var startTime = new Date();
+            text = KARAS.convert(text);
+            var time = new Date() - startTime;
+
+            console.log(text);
+            console.log("[" + time + " msec]");
+        }
+        -->
+        </script>
+    </head>
+    <body onload="convertKARAS();">
+        <div class="column" id="inputcolumn">
+<textarea id="inputarea" cols="100" rows="100" onkeyup="convertKARAS();"></textarea>
+        </div>
+    </body>
+</html>

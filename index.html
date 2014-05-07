@@ -1,0 +1,446 @@
+
+<!--
+Copyright (c) 2014, Daiki Umeda (XJINE) - lightweightmarkuplanguage.com
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<html>
+<head>
+<title>KARAS.js</title>
+<meta name="author" content="Daiki Umeda (XJINE)">
+<meta name="generator" content="Blackboard">
+<meta name="generator" content="KARAS">
+<meta charset="UTF-8" />
+<meta property="og:site_name" content="KARAS">
+<meta property="og:title" content="KARAS.js">
+<meta property="og:url" content="http://lightweightmarkuplanguage.com/KARAS_Javascript/index.html">
+<meta property="og:image" content="http://lightweightmarkuplanguage.com/ogpimg.jpg">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-44157178-2', 'lightweightmarkuplanguage.com');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="./KARAS.js"></script>
+<script type="text/javascript" src="./plugins/Debug.js"></script>
+<script type="text/javascript" src="./plugins/Mark.js"></script>
+<script type="text/javascript" src="./plugins/NowEditing.js"></script>
+<script type="text/javascript" src="./plugins/Template.js"></script>
+<script type="text/javascript" src="./plugins/TOC.js"></script>
+<script type="text/javascript">
+<!--
+function setLayout()
+{
+	var windowHeight = window.innerHeight;
+	var headerStyle = window.getComputedStyle(document.getElementById("header"), null);
+	var headerHeight = parseInt(headerStyle.getPropertyValue("height"), 10);
+	var editareaHeight = windowHeight - headerHeight * 1.5;
+	document.getElementById("columns").style.height = editareaHeight + "px";
+	document.getElementById("columns").style.height = editareaHeight + "px";
+	document.getElementById("inputarea").style.height = editareaHeight + "px";
+	document.getElementById("outputarea").style.height = editareaHeight - 22 + "px";
+}
+
+function convertKARAS()
+{
+	var text = document.getElementById("inputarea").value;
+    var target = document.getElementById("outputarea");
+    text = KARAS.convert(text);
+    target.innerHTML = text;
+}
+
+-->
+</script>
+<style type="text/css">
+<!--
+html
+{
+    overflow-y: scroll;
+}
+body
+{
+	margin: 0px;
+	padding: 0px;
+	background-color: #282E36;
+}
+div#contents
+{
+	width: 90%;
+	margin: 0px auto;
+	padding: 10px;
+}
+div#header
+{
+	padding: 10px;
+	color: white;
+	font-size:large;
+}
+div#header>h1
+{
+	font-family: sans-serif;
+}
+div#header a
+{
+	color: #E03A50;
+}
+div#columns
+{
+	width: 100%;
+	margin: 0px auto;
+}
+div.column
+{
+	width: 50%;
+}
+div#leftcolumn
+{
+	float:left;
+}
+div#rightcolumn
+{
+	float: right;
+}
+textarea
+{
+	overflow-y: scroll;
+	display: block;
+	width: 100%;
+	border: 1px solid gray;
+}
+div#outputarea
+{
+	overflow-y: scroll;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid gray;
+	background-color: white;
+	color: black;
+}
+div#outputarea video, div#outputarea audio
+{
+	background-color: black;
+	border: 1px solid black;
+}
+
+div#outputarea div, div#outputarea section, div#outputarea figure
+{
+	padding: 10px;
+	background-color: aliceblue;
+}
+div#outputarea figure > img
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+div#outputarea figure figcaption
+{
+	text-align: center;
+}
+div#outputarea pre > kbd
+{
+	display: block;
+	padding: 10px;
+	background-color: black;
+	color: white;
+}
+div#outputarea pre > code
+{
+	display: block;
+	padding: 10px;
+	background-color: lightgray;
+	color: black;
+}
+div#outputarea span
+{
+	background-color: aliceblue;
+}
+div#outputarea table
+{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+}
+div#outputarea table, div#outputarea th, div#outputarea td
+{
+	padding: 5px;
+	border: 2px lightgray solid;
+}
+div#outputarea th
+{
+	background-color: lightgray;
+}
+div#outputarea blockquote
+{
+	padding: 10px;
+	border: 2px lightgray solid;
+	border-radius: 5px;
+}
+div#outputarea blockquote p
+{
+	margin: 0px;
+	padding: 2px;
+}
+//-->
+</style>
+</head>
+	<body onload="setLayout();convertKARAS();" onresize="setLayout();">
+	<body>
+	<div id="contents">
+		<div id="header">
+			<h1>KARAS.js</h1>
+			<p>This is sandbox of lightweight markup language KARAS and shows few syntax. If you want to get more info about KARAS and the syntax, visit <a href="http://lightweightmarkuplanguage.com">lightweightmarkuplanguage.com</a></p>
+	        <p>Support modern browser only and need javascript version 1.8.5 or over.</p>
+		</div>
+		<div id="columns">
+			<div class="column" id="leftcolumn">
+<textarea id="inputarea" onkeyup="convertKARAS();">
+= Sand Box
+
+==============================================================
+== Inline markups :: idoption
+
+**bold** & *** strong***
+
+//italic// & ///emphasize///
+
+%%strike%% & %%%delete%%%
+
+__underline__ & ____insert___
+
+''super'' & '''RU::ru::BY::by'''
+
+,,sub,,
+
+``var`` & ```code```
+
+$$kbd$$ & $$$samp$$$
+
+""quote""
+
+@@cite@@ & @@@small@@@
+
+??dfn?? & ???dfn-abbr???
+
+
+
+==============================================================
+== Link :: link
+
+((Link)) is quite simple. 
+You can use alias text like ((URL :: this)).
+
+
+
+==============================================================
+== Media :: media
+
+Media syntax filters the extension, and outputs HTML5 relevant-tag (with object/embed tags).
+Nothing is appears when file or plugins is not found. 
+
+(((test.mp4)))
+(((test.mp3 :: controls)))
+(((test.jpg :: width=100 height= 80)))
+
+
+
+==============================================================
+== Group :: group
+
+
+
+=== Block group
+
+You can grouping some contents and named it.
+Basically, it becomes //div// and the class name.
+
+{{groupname
+Following contents are grouped.
+- list
++ list
+
+(((test.jpg::width=100 height=100)))
+}}
+
+
+
+You can use some special group. section is one of it.
+
+{{section
+This grouped contents becomes section contents.
+}}
+
+
+
+Especialy //pre//, //kbd//, //samp//, //code// group's contents become a preformatted text, ~
+and syntaxs are not converted.
+
+{{kbd
+$ console-like kbd area with css.
+$ echo Unyalder!
+Unyalder!
+}}
+
+
+
+If you want to name special class, like this.
+
+{{code::javascript
+int index = 0;
+<html>code</html>
+**bold**
+}}
+
+
+
+Heading syntax in //figure// special group becomes //figcaption//.
+
+{{figure
+(((figure.jpg)))
+= figcaption.
+}}
+
+{{figure
+= Blockgroup in Blockgroup sample.c
+{{code
+#include <stdio.h>
+int main()
+{
+    print("Unyalder!");
+    return 0;
+}
+}}
+}}
+
+
+
+=== Inline group
+
+This is <<classname::inline group>> level 1, output as //span=class//.
+This is <<<idname::inline group>>> level 1, output as //span=id//.
+
+Inline group hasnt special name like //Block group//. 
+
+
+
+==============================================================
+== Table :: table
+
+!| Header  !| Header !< Left
+|| Default |= Center |> Right
+|| Rowspan || ::     || Colspan
+|| Cell    || Cell   || :::
+
+{{figure
+= Tablecaption
+!| ## none ## !|Header !|Header
+|| Value-A    |> 0 |> 0 
+|| Value-B    |> 0 |> 0
+}}
+
+
+
+==============================================================
+== List::list
+
++ Ordered list.
++ 2nd ordered list.
+++ Nested ordered list
+++ Ordered list with option :: 5
+++ This list number becomes the next of previous option.
+
+- Unodererd list
+++ Ordered list combination
+++ Ordered list 2
+
+; Definition list - Term
+;; Definition list - description 1
+;; Definition list - description 1
+
+
+
+==============================================================
+== Blockquote :: blockquote
+
+> Blockquote text
+> You can use //KARAS sytanx// in blockquote.
+>> Nested blockquote.
+> - list in blockquote level 1.
+
+
+
+==============================================================
+== Others :: others
+
+If you want to get all of syntax or more details, visit ((http://www.lightweightmarkuplanguage.com))
+
+=== Comment out :: commentout
+
+Comment out text is HERE! -> ## this text doesnt appeare. ##
+
+=== Escape
+
+If you want to disable to syntax, use //Backslash(\\)// mark. \*\*This is escape sample\*\*.
+
+=== Line break
+
+Line break is like~
+this.
+
+=== HTML tag
+
+You can use HTML element in KARAS document <b>like this</b>.
+
+
+
+==============================================================
+== Plugin::plugin
+
+You can use and develop plugin. //Table Of Contents(TOC)// is one of action-type plugin sample.
+
+[[[toc]]]
+
+If you want to use markedup text in plugin, use convert-type.
+
+[[mark::markedup text]]
+
+You can use option parameter like this. 
+
+[[mark::red::markedup text]]
+</textarea>
+			</div>
+			<div class="column" id="rightcolumn">
+				<div id="outputarea"></div>
+			</div>
+		</div>
+	</div>
+	<body>
+</html>

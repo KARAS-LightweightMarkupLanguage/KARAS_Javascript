@@ -33,7 +33,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <head>
 <title>KARAS.js</title>
 <meta name="author" content="Daiki Umeda (XJINE)">
-<meta name="generator" content="Blackboard">
 <meta name="generator" content="KARAS">
 <meta charset="UTF-8" />
 <meta property="og:site_name" content="KARAS">
@@ -46,30 +45,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <script type="text/javascript" src="./plugins/NowEditing.js"></script>
 <script type="text/javascript" src="./plugins/Template.js"></script>
 <script type="text/javascript" src="./plugins/TOC.js"></script>
-<script type="text/javascript" src="./plugins/MathJax.js"></script>
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
-</script>
 <script type="text/javascript">
 function setLayout()
 {
-	var windowHeight = window.innerHeight;
-	var headerStyle = window.getComputedStyle(document.getElementById("header"), null);
-	var headerHeight = parseInt(headerStyle.getPropertyValue("height"), 10);
-	var editareaHeight = windowHeight - headerHeight * 1.5;
-	document.getElementById("columns").style.height = editareaHeight + "px";
-	document.getElementById("columns").style.height = editareaHeight + "px";
-	document.getElementById("inputarea").style.height = editareaHeight + "px";
-	document.getElementById("outputarea").style.height = editareaHeight - 22 + "px";
+    var windowHeight = window.innerHeight;
+    var headerStyle = window.getComputedStyle(document.getElementById("header"), null);
+    var headerHeight = parseInt(headerStyle.getPropertyValue("height"), 10);
+    var editareaHeight = windowHeight - headerHeight * 1.5;
+    document.getElementById("columns").style.height = editareaHeight + "px";
+    document.getElementById("columns").style.height = editareaHeight + "px";
+    document.getElementById("inputarea").style.height = editareaHeight + "px";
+    document.getElementById("outputarea").style.height = editareaHeight - 22 + "px";
 }
 
 function convertKARAS()
 {
-	var text = document.getElementById("inputarea").value;
+    var text = document.getElementById("inputarea").value;
     var target = document.getElementById("outputarea");
     text = KARAS.convert(text);
     target.innerHTML = text;
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "outputarea"]);
 }
 </script>
 <style type="text/css">
@@ -80,141 +74,141 @@ html
 }
 body
 {
-	margin: 0px;
-	padding: 0px;
-	background-color: #282E36;
+    margin: 0px;
+    padding: 0px;
+    background-color: #282E36;
 }
 div#contents
 {
-	width: 90%;
-	margin: 0px auto;
-	padding: 10px;
+    width: 90%;
+    margin: 0px auto;
+    padding: 10px;
 }
 div#header
 {
-	padding: 10px;
-	color: white;
-	font-size:large;
+    padding: 10px;
+    color: white;
+    font-size:large;
 }
 div#header>h1
 {
-	font-family: sans-serif;
+    font-family: sans-serif;
 }
 div#header a
 {
-	color: #E03A50;
+    color: #E03A50;
 }
 div#columns
 {
-	width: 100%;
-	margin: 0px auto;
+    width: 100%;
+    margin: 0px auto;
 }
 div.column
 {
-	width: 50%;
+    width: 50%;
 }
 div#leftcolumn
 {
-	float:left;
+    float:left;
 }
 div#rightcolumn
 {
-	float: right;
+    float: right;
 }
 textarea
 {
-	overflow-y: scroll;
-	display: block;
-	width: 100%;
-	border: 1px solid gray;
+    overflow-y: scroll;
+    display: block;
+    width: 100%;
+    border: 1px solid gray;
 }
 div#outputarea
 {
-	overflow-y: scroll;
-	width: 100%;
-	padding: 10px;
-	border: 1px solid gray;
-	background-color: white;
-	color: black;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid gray;
+    background-color: white;
+    color: black;
 }
 div#outputarea video, div#outputarea audio
 {
-	background-color: black;
-	border: 1px solid black;
+    background-color: black;
+    border: 1px solid black;
 }
 
 div#outputarea div, div#outputarea section, div#outputarea figure
 {
-	background-color: aliceblue;
+    background-color: aliceblue;
 }
 div#outputarea figure > img
 {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 div#outputarea figure figcaption
 {
-	text-align: center;
+    text-align: center;
 }
 div#outputarea pre > kbd
 {
-	display: block;
-	padding: 10px;
-	background-color: black;
-	color: white;
+    display: block;
+    padding: 10px;
+    background-color: black;
+    color: white;
 }
 div#outputarea pre > code
 {
-	display: block;
-	padding: 10px;
-	background-color: lightgray;
-	color: black;
+    display: block;
+    padding: 10px;
+    background-color: lightgray;
+    color: black;
 }
 div#outputarea span
 {
-	background-color: aliceblue;
+    background-color: aliceblue;
 }
 div#outputarea table
 {
-	width: 60%;
-	margin-left: auto;
-	margin-right: auto;
-	border-collapse: collapse;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
 }
 div#outputarea table, div#outputarea th, div#outputarea td
 {
-	padding: 5px;
-	border: 2px lightgray solid;
+    padding: 5px;
+    border: 2px lightgray solid;
 }
 div#outputarea th
 {
-	background-color: lightgray;
+    background-color: lightgray;
 }
 div#outputarea blockquote
 {
-	padding: 10px;
-	border: 2px lightgray solid;
-	border-radius: 5px;
+    padding: 10px;
+    border: 2px lightgray solid;
+    border-radius: 5px;
 }
 div#outputarea blockquote p
 {
-	margin: 0px;
-	padding: 2px;
+    margin: 0px;
+    padding: 2px;
 }
 //-->
 </style>
 </head>
-	<body onload="setLayout();convertKARAS();" onresize="setLayout();">
-	<body>
-	<div id="contents">
-		<div id="header">
-			<h1>KARAS.js</h1>
-			<p>This is sandbox of lightweight markup language KARAS and shows few syntax. If you want to get more info about KARAS and the syntax, visit <a href="http://lightweightmarkuplanguage.com">lightweightmarkuplanguage.com</a></p>
-	        <p>Support modern browser only and need javascript version 1.8.5 or over.</p>
-		</div>
-		<div id="columns">
-			<div class="column" id="leftcolumn">
+    <body onload="setLayout();convertKARAS();" onresize="setLayout();">
+    <body>
+    <div id="contents">
+        <div id="header">
+            <h1>KARAS.js</h1>
+            <p>This is sandbox of lightweight markup language KARAS and shows few syntax. If you want to get more info about KARAS and the syntax, visit <a href="http://lightweightmarkuplanguage.com">lightweightmarkuplanguage.com</a></p>
+            <p>Support modern browser only and need javascript version 1.8.5 or over.</p>
+        </div>
+        <div id="columns">
+            <div class="column" id="leftcolumn">
 <textarea id="inputarea" onkeyup="convertKARAS();">
 = Sand Box
 
@@ -429,19 +423,12 @@ You can use option parameter like this.
 
 [[mark::red::markedup text]]
 
-Inline type MathJax sample. [[mathjax :: y=x^{2}+2x+1]]
-
-Block type MathJax sample.
-[[[mathjax ::
-     \sum_{n=1}^{N}n = 1 + 2 + 3 + 4 + \cdots + (N-3) + (N-2) + (N-1) + N \tag{1}
-]]]
-
 </textarea>
-			</div>
-			<div class="column" id="rightcolumn">
-				<div id="outputarea"></div>
-			</div>
-		</div>
-	</div>
-	<body>
+            </div>
+            <div class="column" id="rightcolumn">
+                <div id="outputarea"></div>
+            </div>
+        </div>
+    </div>
+    <body>
 </html>

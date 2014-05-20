@@ -31,7 +31,10 @@ KARAS.toc = new Object();
 
 KARAS.toc.action = function(text, options)
 {
-    //match group index.
+    // Remove heading syntax in pre element.
+    text = KARAS.replaceTextInPreElement(text, "=", "");
+
+    // match group index.
     var mgiAllText = 0;
     var mgiMarks = 1;
     var mgiMarkedupText = 2;

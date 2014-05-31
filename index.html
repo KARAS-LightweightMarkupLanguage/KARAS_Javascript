@@ -213,6 +213,7 @@ div#outputarea blockquote p
 = Sand Box
 
 ==============================================================
+
 == Inline markups :: idoption
 
 **bold** & *** strong***
@@ -237,36 +238,31 @@ $$kbd$$ & $$$samp$$$
 
 ??dfn?? & ???dfn-abbr???
 
+================================================================
 
-
-==============================================================
 == Link :: link
 
 ((Link)) is quite simple. 
 You can use alias text like ((URL :: this)).
 
+================================================================
 
-
-==============================================================
 == Media :: media
 
-Media syntax filters the extension, and outputs HTML5 relevant-tag (with object/embed tags).
-Nothing is appears when file or plugins is not found. 
+Media syntax filters the extension, and outputs relevant HTML5 tag (with object/embed tags).
+Nothing is appears when the file or plugins is not found. 
 
 (((test.mp4)))
 (((test.mp3 :: controls)))
 (((test.jpg :: width=100 height= 80)))
 
+================================================================
 
-
-==============================================================
 == Group :: group
-
-
 
 === Block group
 
-You can grouping some contents and named it.
+You can group some contents and named it.
 Basically, it becomes //div// and the class name.
 
 {{groupname
@@ -279,7 +275,7 @@ Following contents are grouped.
 
 
 
-You can use some special group. section is one of it.
+You can use some special group. //section// is one of it.
 
 {{section
 This grouped contents becomes section contents.
@@ -298,7 +294,7 @@ Unyalder!
 
 
 
-If you want to name special class, like this.
+If you want to name the special class, like this.
 
 {{code::javascript
 int index = 0;
@@ -308,7 +304,7 @@ int index = 0;
 
 
 
-Heading syntax in //figure// special group becomes //figcaption//.
+Heading syntax in //figure// group becomes //figcaption//.
 
 {{figure
 (((figure.jpg)))
@@ -331,14 +327,13 @@ int main()
 
 === Inline group
 
-This is <<classname::inline group>> level 1, output as //span=class//.
-This is <<<idname::inline group>>> level 1, output as //span=id//.
+This is level 1 <<classname::inline group>>, output as //span class//.
+This is level 2 <<<idname::inline group>>>, output as //span id//.
 
-Inline group hasnt special name like //Block group//. 
-
-
+Inline group has no special name like a //Block group//. 
 
 ==============================================================
+
 == Table :: table
 
 !| Header  !| Header !< Left
@@ -353,16 +348,15 @@ Inline group hasnt special name like //Block group//.
 || Value-B    |> 0 |> 0
 }}
 
-
-
 ==============================================================
+
 == List::list
 
 + Ordered list.
 + 2nd ordered list.
 ++ Nested ordered list
 ++ Ordered list with option :: 5
-++ This list number becomes the next of previous option.
+++ This list number becomes the next of the previous option.
 
 - Unodererd list
 ++ Ordered list combination
@@ -372,22 +366,20 @@ Inline group hasnt special name like //Block group//.
 ;; Definition list - description 1
 ;; Definition list - description 1
 
+================================================================
 
-
-==============================================================
 == Blockquote :: blockquote
 
-> Blockquote text
-> You can use //KARAS sytanx// in blockquote.
+> Blockquote text.
+> You can use //KARAS// sytanx in blockquote.
 >> Nested blockquote.
-> - list in blockquote level 1.
+> - list in blockquote.
 
+================================================================
 
-
-==============================================================
 == Others :: others
 
-If you want to get all of syntax or more details, visit ((http://www.lightweightmarkuplanguage.com))
+If you want to get all of the syntax or more details, visit ((http://www.lightweightmarkuplanguage.com))
 
 === Comment out :: commentout
 
@@ -395,7 +387,7 @@ Comment out text is HERE! -> ## this text doesnt appeare. ##
 
 === Escape
 
-If you want to disable to syntax, use //Backslash(\\)// mark. \*\*This is escape sample\*\*.
+If you want to disable the syntax, use //backslash(\\)// mark. \*\*This is escape sample\*\*.
 
 === Line break
 
@@ -404,11 +396,10 @@ this.
 
 === HTML tag
 
-You can use HTML element in KARAS document <b>like this</b>.
+You can use HTML element in KARAS <b>like this</b>.
 
+================================================================
 
-
-==============================================================
 == Plugin::plugin
 
 You can use and develop plugin. //Table Of Contents(TOC)// is one of action-type plugin sample.
@@ -422,7 +413,6 @@ If you want to use markedup text in plugin, use convert-type.
 You can use option parameter like this. 
 
 [[mark::red::markedup text]]
-
 </textarea>
             </div>
             <div class="column" id="rightcolumn">

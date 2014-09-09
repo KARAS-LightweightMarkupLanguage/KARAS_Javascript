@@ -212,15 +212,15 @@ div#outputarea blockquote p
 <textarea id="inputarea" onkeyup="convertKARAS();">
 = Sand Box
 
-==============================================================
+=================================================
 
 == Inline markups :: idoption
 
-**bold** & *** strong***
+** bold ** & *** strong ***
 
 //italic// & ///emphasize///
 
-%%strike%% & %%%delete%%%
+%% strike %% & %%% delete %%%
 
 __underline__ & ____insert___
 
@@ -230,22 +230,22 @@ __underline__ & ____insert___
 
 ``var`` & ```code```
 
-$$kbd$$ & $$$samp$$$
+$$ kbd $$ & $$$ samp $$$
 
 ""quote""
 
-@@cite@@ & @@@small@@@
+@@ cite @@ & @@@ small @@@
 
-??dfn?? & ???dfn-abbr???
+?? dfn ?? & ??? dfn-abbr ???
 
-================================================================
+=================================================
 
 == Link :: link
 
 ((Link)) is quite simple. 
 You can use alias text like ((URL :: this)).
 
-================================================================
+=================================================
 
 == Media :: media
 
@@ -256,7 +256,7 @@ Nothing is appears when the file or plugins is not found.
 (((test.mp3 :: controls)))
 (((test.jpg :: width=100 height= 80)))
 
-================================================================
+=================================================
 
 == Group :: group
 
@@ -266,11 +266,13 @@ You can group some contents and named it.
 Basically, it becomes //div// and the class name.
 
 {{groupname
+
 Following contents are grouped.
 - list
 + list
 
 (((test.jpg::width=100 height=100)))
+
 }}
 
 
@@ -280,7 +282,6 @@ You can use some special group. //section// is one of it.
 {{section
 This grouped contents becomes section contents.
 }}
-
 
 
 Especialy //pre//, //kbd//, //samp//, //code// group's contents become a preformatted text, ~
@@ -293,46 +294,49 @@ Unyalder!
 }}
 
 
-
 If you want to name the special class, like this.
 
-{{code::javascript
+{{code :: javascript
 int index = 0;
 <html>code</html>
 **bold**
 }}
 
 
-
 Heading syntax in //figure// group becomes //figcaption//.
 
 {{figure
+
 (((figure.jpg)))
 = figcaption.
+
 }}
 
 {{figure
+
 = Blockgroup in Blockgroup sample.c
+
 {{code
-#include <stdio.h>
-int main()
-{
-    print("Unyalder!");
-    return 0;
-}
+    #include <stdio.h>
+    int main()
+    {
+        print("Unyalder!");
+        return 0;
+    }
 }}
+
 }}
 
 
 
 === Inline group
 
-This is level 1 <<classname::inline group>>, output as //span class//.
-This is level 2 <<<idname::inline group>>>, output as //span id//.
+This is level 1 <<classname :: inline group>>, output as //span class//.
+This is level 2 <<<idname :: inline group>>>, output as //span id//.
 
 Inline group has no special name like a //Block group//. 
 
-==============================================================
+=================================================
 
 == Table :: table
 
@@ -343,12 +347,13 @@ Inline group has no special name like a //Block group//.
 
 {{figure
 = Tablecaption
+
 !| ## none ## !|Header !|Header
 || Value-A    |> 0 |> 0 
 || Value-B    |> 0 |> 0
 }}
 
-==============================================================
+=================================================
 
 == List::list
 
@@ -364,9 +369,9 @@ Inline group has no special name like a //Block group//.
 
 ; Definition list - Term
 ;; Definition list - description 1
-;; Definition list - description 1
+;; Definition list - description 2
 
-================================================================
+=================================================
 
 == Blockquote :: blockquote
 
@@ -375,19 +380,22 @@ Inline group has no special name like a //Block group//.
 >> Nested blockquote.
 > - list in blockquote.
 
-================================================================
+=================================================
 
 == Others :: others
 
 If you want to get all of the syntax or more details, visit ((http://www.lightweightmarkuplanguage.com))
 
+
 === Comment out :: commentout
 
 Comment out text is HERE! -> ## this text doesnt appeare. ##
 
+
 === Escape
 
 If you want to disable the syntax, use //backslash(\\)// mark. \*\*This is escape sample\*\*.
+
 
 === Line break
 
@@ -398,7 +406,7 @@ this.
 
 You can use HTML element in KARAS <b>like this</b>.
 
-================================================================
+=================================================
 
 == Plugin::plugin
 

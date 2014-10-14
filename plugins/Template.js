@@ -29,18 +29,18 @@
 
 KARAS.template = new Object();
 
-KARAS.template.convert = function(markedupText, options)
+KARAS.template.convert = function(options, markedupText)
 {
-    //Markup syntax is this. "[[plugin::option1::option2…::markedupText]]"
+    //Markup syntax is this. "[[plugin::option1::option2…:::markedupText]]"
     //Markedup text(and the syntax) in original text will be removed,
     //and insert return text there.
     //If you wont insert anything text, you have to return ""(empty string).
     return markedupText;
 };
 
-KARAS.template.action = function(text, options)
+KARAS.template.action = function(options, markedupText, text)
 {
-    //Markup syntax is this. "[[[plugin::option1::option2…]]]"
+    //Markup syntax is this. "[[[plugin::option1::option2…:::markedupText]]]"
     //"text" is all of the original text.
     //Markedup text(and the syntax) in original text will be removed,
     //and insert return text there.

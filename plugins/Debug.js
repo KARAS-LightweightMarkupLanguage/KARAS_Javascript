@@ -29,12 +29,12 @@
 
 KARAS.debug = new Object();
 
-KARAS.debug.convert = function(markedupText, options)
+KARAS.debug.convert = function(options, markedupText)
 {
     return markedupText;
 };
 
-KARAS.debug.action = function(text, options)
+KARAS.debug.action = function(options, maerkedupText, text)
 {
     return options[0];
 };

@@ -76,7 +76,7 @@ var KARAS = new Object();
     KARAS.RegexCommentOut
        = new RegExp("(\\\\*)(\\#{2,})", "g");
     KARAS.RegexSplitOption
-       = new RegExp("(\\\\*)(\\:\\:)", "g");
+       = new RegExp("(\\\\*)(\\:{2,3})", "g");
 
     //Other
     KARAS.RegexEscape
@@ -173,7 +173,7 @@ var KARAS = new Object();
 
 
 
-    KARAS.convert = function(text)
+    KARAS.convert = function(text, startLevelOfHeading)
     {
         var escapeCode = KARAS.generateSafeEscapeCode(text, KARAS.DefaultEscapeCode);
         var escapeCodeRegex = new RegExp(escapeCode, "g");
@@ -214,7 +214,7 @@ var KARAS = new Object();
         text = KARAS.convertTable(text);
         text = KARAS.convertList(text);
         text = KARAS.convertDefList(text);
-        text = KARAS.convertHeading(text);
+        text = KARAS.convertHeading(text, startLevelOfHeading);
         text = KARAS.convertBlockLink(text);
         text = KARAS.convertParagraph(text);
         text = KARAS.reduceBlankLine(text);
@@ -425,15 +425,19 @@ var KARAS = new Object();
         return text.replace(KARAS.RegexWhiteSpace, "");
     };
 
-    KARAS.splitOption = function(text)
-    {
+    KARAS.splitOption = function(text, isSpecialOption)
+    {        
         //match group index.
         //number mgiAllText = 0;
         var mgiEscapes = 1;
         var mgiMarks = 2;
 
+        var result = new Object();
+        result.isSpecialOption = isSpecialOption;
+        result.options = new Array();
         var match = null;
         var nextMatchIndex = 0;
+
         KARAS.RegexSplitOption.lastIndex = 0;
 
         while (true)
@@ -442,7 +446,8 @@ var KARAS = new Object();
 
             if (match == null)
             {
-                return new Array(text.trim());
+                result.options.push(text.trim());
+                return result;
             }
 
             if (match[mgiEscapes].length % 2 == 1)
@@ -452,35 +457,53 @@ var KARAS = new Object();
                 continue;
             }
 
-            return new Array
-            (
-                text.substr(0, KARAS.indexOfMatchGroup(match, mgiMarks)).trim(),
-                text.substr
-                    (KARAS.indexOfMatchGroup(match, mgiMarks) + match[mgiMarks].length).trim()
-            );
+            if(match[mgiMarks].length == 3)
+            {
+                result.isSpecialOption = true;
+            }
+            else
+            {
+                result.isSpecialOption = false;
+            }
+
+            result.options.push(text.substr(0, KARAS.indexOfMatchGroup(match, mgiMarks)).trim());
+            result.options.push(text.substr(KARAS.indexOfMatchGroup(match, mgiMarks)
+                                + match[mgiMarks].length).trim());
+
+            return result;
         }
     };
 
-    KARAS.splitOptions = function(text)
+    KARAS.splitOptions = function(text, hasSpecialOption)
     {
-        var textList = new Array();
+        var result = new Object();
+        result.hasSpecialOption = hasSpecialOption;
+        result.options = new Array();
         var restText = text.trim();
 
         while (true)
         {
-            var splitTexts = KARAS.splitOption(restText);
+            var splitResult = KARAS.splitOption(restText, false); 
 
-            if (splitTexts.length == 1)
+            if (splitResult.options.length == 1)
             {
-                textList.push(restText);
+                result.options.push(restText);
                 break;
             }
 
-            textList.push(splitTexts[0]);
-            restText = splitTexts[1];
+            if(splitResult.isSpecialOption == true)
+            {
+                result.options.push(splitResult.options[0]);
+                result.options.push(splitResult.options[1]);
+                result.hasSpecialOption = true;
+                break;
+            }
+
+            result.options.push(splitResult.options[0]);
+            restText = splitResult.options[1];
         }
 
-        return textList;
+        return result;
     };
 
 
@@ -581,38 +604,39 @@ var KARAS = new Object();
 
     KARAS.constructPluginText = function(text, markedupText, openMarks, closeMarks)
     {
-        var markedupTexts = KARAS.splitOptions(markedupText);
+        var splitResult = KARAS.splitOptions(markedupText, false);
+        var hasSpecialOption = splitResult.hasSpecialOption;
+        var markedupTexts = splitResult.options;
+        var markedupText = null;
         var pluginName = markedupTexts[0];
         var options = new Array();
 
+        //Remove plugin name from option.
+        if (markedupTexts.length > 1)
+        {
+            options = markedupTexts.slice(1);
+        }
+
+        if(hasSpecialOption == true)
+        {
+            markedupText = options.pop();
+        }
+
         if (openMarks.length > 2 && closeMarks.length > 2)
         {
-            if (markedupTexts.length > 1)
-            {
-                options = markedupTexts.slice(1);
-            }
-
-            return constructActionTypePlugintText(pluginName, text, options);
+            return constructActionTypePlugintText(pluginName, options, markedupText, text);
         }
         else
         {
-            markedupText = markedupTexts[markedupTexts.length - 1];
-
-            if (markedupTexts.length > 2)
-            {
-                options = markedupTexts.slice(1, markedupTexts.length - 1);
-            }
-
-            return constructConvertTypePluginText
-                (pluginName, markedupText, options);
+            return constructConvertTypePluginText(pluginName, options, markedupText);
         }
     };
 
-    function constructConvertTypePluginText(pluginName, markedupText, options)
+    function constructActionTypePlugintText(pluginName, options, markedupText, text)
     {
         try
         {
-            return window["KARAS"][pluginName.toLowerCase()]["convert"](markedupText, options);
+            return window["KARAS"][pluginName.toLowerCase()]["action"](options, markedupText, text);
         }
         catch(e)
         {
@@ -620,11 +644,11 @@ var KARAS = new Object();
         }
     }
 
-    function constructActionTypePlugintText(pluginName, text, options)
+    function constructConvertTypePluginText(pluginName, options, markedupText)
     {
         try
         {
-            return window["KARAS"][pluginName.toLowerCase()]["action"](text, options);
+            return window["KARAS"][pluginName.toLowerCase()]["convert"](options, markedupText);
         }
         catch(e)
         {
@@ -785,7 +809,7 @@ var KARAS = new Object();
         blockGroupMatch.index = index;
         blockGroupMatch.length = textLength;
 
-        var options = KARAS.splitOptions(optionText);
+        var options = KARAS.splitOptions(optionText, false).options;
 
         if (options.length > 0)
         {
@@ -888,7 +912,7 @@ var KARAS = new Object();
                 //Note, it is important to convert inline markups first,
                 //to convert inline markup's options first.
                 var markedupText = KARAS.convertInlineMarkup(match[mgiMarkedupText]);
-                var markedupTexts = KARAS.splitOptions(markedupText);
+                var markedupTexts = KARAS.splitOptions(markedupText, false).options;
                 var id = "";
 
                 if (markedupTexts.length > 1)
@@ -1721,7 +1745,7 @@ var KARAS = new Object();
             listText += constructListItemText(sequentialList.items[i]) + "</li>\n<li";
         }
 
-        listText +=  constructListItemText(sequentialList.items[sequentialList.items.length - 1]);
+        listText += constructListItemText(sequentialList.items[sequentialList.items.length - 1]);
 
         return listText;
     }
@@ -1853,7 +1877,7 @@ var KARAS = new Object();
     function constructListItemText(listItemText)
     {
         listItemText = KARAS.convertInlineMarkup(listItemText);
-        var listItemTexts = KARAS.splitOption(listItemText);
+        var listItemTexts = KARAS.splitOption(listItemText, false).options;
 
         if (listItemTexts.length > 1)
         {
@@ -1971,7 +1995,7 @@ var KARAS = new Object();
         return text;
     };
 
-    KARAS.convertHeading = function(text)
+    KARAS.convertHeading = function(text, startLevelOfHeading)
     {
         //match group index.
         var mgiAllText = 0;
@@ -1995,6 +2019,7 @@ var KARAS = new Object();
 
             var newText = "";
             var level = match[mgiMarks].length;
+            level = level + startLevelOfHeading - 1;
 
             if (level >= maxLevelOfHeading + 1)
             {
@@ -2005,7 +2030,7 @@ var KARAS = new Object();
                 //Note, it is important to convert inline markups first,
                 //to convert inline markup's options first.
                 var markedupText = KARAS.convertInlineMarkup(match[mgiMarkedupText]);
-                var markedupTexts = KARAS.splitOption(markedupText);
+                var markedupTexts = KARAS.splitOption(markedupText, false).options;
                 var id = "";
 
                 if (markedupTexts.length > 1)
@@ -2480,7 +2505,7 @@ var KARAS = new Object();
     function constructLinkText(markedupText, newText, openMarks, closeMarks)
     {
         var result = new Object();
-        var markedupTexts = KARAS.splitOption(markedupText);
+        var markedupTexts = KARAS.splitOption(markedupText, false).options;
         var url = markedupTexts[0];
 
         if (openMarks.length >= 5 && closeMarks.length >= 5)
@@ -2715,7 +2740,7 @@ var KARAS = new Object();
     function constructInlineGroupText(markedupText, newText, openMarks, closeMarks)
     {
         var result = new Object();
-        var markedupTexts = KARAS.splitOption(markedupText);
+        var markedupTexts = KARAS.splitOption(markedupText, false).options;
         var idClass = "";
 
         if (openMarks.length >= 3 && closeMarks.length >= 3)
@@ -2727,15 +2752,22 @@ var KARAS = new Object();
             idClass = " class=\"";
         }
 
+        if (markedupTexts[0].length == 0)
+        {
+            idClass = "";
+        }
+        else
+        {
+            idClass += markedupTexts[0] + "\""
+        }
+
         if (markedupTexts.length > 1)
         {
-            idClass += markedupTexts[0] + "\"";
             result.newText = markedupTexts[1];
         }
         else
         {
-            result.newText = markedupTexts[0];
-            idClass = "";
+            result.newText = "";
         }
 
         var markDiff = openMarks.length - closeMarks.length;
@@ -2770,7 +2802,7 @@ var KARAS = new Object();
         {
             openTag = "<ruby>";
             closeTag = "</ruby>";
-            var markedupTexts = KARAS.splitOptions(markedupText);
+            var markedupTexts = KARAS.splitOptions(markedupText, false).options;
             markedupText = markedupTexts[0];
 
             for (var i = 1; i < markedupTexts.length; i += 2)

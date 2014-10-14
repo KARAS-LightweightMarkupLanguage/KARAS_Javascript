@@ -29,7 +29,7 @@
 
 KARAS.mark = new Object();
 
-KARAS.mark.convert = function(markedupText, options)
+KARAS.mark.convert = function(options, markedupText)
 {
         var color = "";
 
@@ -37,6 +37,6 @@ KARAS.mark.convert = function(markedupText, options)
         {
             color = " style=\"background-color:" + options[0] +";\"";
         }
-        
+
         return "<mark" + color + ">" + markedupText + "</mark>";
 };

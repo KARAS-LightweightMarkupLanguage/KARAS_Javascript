@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             var text = document.getElementById("inputarea").value;
 
             var startTime = new Date();
-            text = KARAS.convert(text);
+            text = KARAS.convert(text, 1);
             var time = new Date() - startTime;
 
             console.log(text);

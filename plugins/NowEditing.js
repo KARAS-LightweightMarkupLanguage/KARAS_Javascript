@@ -29,12 +29,12 @@
 
 KARAS.nowediting = new Object();
 
-KARAS.nowediting.convert = function(markedupText, options)
+KARAS.nowediting.convert = function(options, markedupText)
 {
     return "<b> Now Editing. </b>";
 };
 
-KARAS.nowediting.action = function(text, options)
+KARAS.nowediting.action = function(options, markedupText, text)
 {
     return "\n<p><span style=\"font-size:300%;\"><b> Now Editing. </b></span></p>\n";
 };

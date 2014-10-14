@@ -62,7 +62,7 @@ function convertKARAS()
 {
     var text = document.getElementById("inputarea").value;
     var target = document.getElementById("outputarea");
-    text = KARAS.convert(text);
+    text = KARAS.convert(text, 1);
     target.innerHTML = text;
 }
 </script>
@@ -416,11 +416,11 @@ You can use and develop plugin. //Table Of Contents(TOC)// is one of action-type
 
 If you want to use markedup text in plugin, use convert-type.
 
-[[mark::markedup text]]
+[[mark:::markedup text]]
 
 You can use option parameter like this. 
 
-[[mark::red::markedup text]]
+[[mark::red:::markedup text]] 
 </textarea>
             </div>
             <div class="column" id="rightcolumn">

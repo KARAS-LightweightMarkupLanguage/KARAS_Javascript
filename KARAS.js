@@ -2130,7 +2130,7 @@ var KARAS = new Object();
             if (match[mgiLTMarks].length == 1)
             {
                 //Note, it is important to exclude line breaks (like \n).
-                nextMatchIndex = KARAS.indexOfMatchGroup(match, mgiAllText)
+                nextMatchIndex = KARAS.indexOfMatchGroup(match, mgiMarkedupText)
                                  + match[mgiMarkedupText].length;
                 KARAS.RegexParagraph.lastIndex = nextMatchIndex;
                 continue;
